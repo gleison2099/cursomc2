@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.udemy.uml.cursomc2.domain.Categoria;
 import com.udemy.uml.cursomc2.repositories.CategoriaRepository;
+import com.udemy.uml.cursomc2.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {
@@ -16,7 +17,9 @@ public class CategoriaService {
 	
 	public Categoria find(Integer id) {
 		Optional<Categoria> obj = categoriaRepository.findById(id);
-		return obj.orElse(null);
+		
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado ID:" + id + 
+				", tipo: " + Categoria.class.getName()));
 	}
 
 }
